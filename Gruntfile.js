@@ -1,12 +1,34 @@
+//
+//  Uses: 
+//    - grunt-cli v0.1.9
+//    - grunt v0.4.1
+//
 module.exports = function(grunt) {
 
-  // load external libs
-  grunt.loadNpmTasks('grunt-spell');
-  grunt.loadNpmTasks('grunt-contrib');
-  grunt.loadNpmTasks('grunt-contrib-uglify');
+  //
+  //  ====================================================
+  //  Load external modules (that are installed when you 
+  //  type 'npm install')
+  //  ====================================================
+  //
+  grunt.loadNpmTasks('grunt-contrib');          // 
+  grunt.loadNpmTasks('grunt-contrib-htmlmin');  // htmlmin
+  grunt.loadNpmTasks('grunt-css');              // cssmin
+  grunt.loadNpmTasks('grunt-contrib-uglify');   // uglify
 
+  // tests
+  grunt.loadNpmTasks('grunt-spell');            // spell
+  grunt.loadNpmTasks('grunt-contrib-jshint');
+  grunt.loadNpmTasks('grunt-contrib-qunit');
   
-  // configure the tasks that grunt will run. 
+  
+  
+  //
+  //  ====================================================
+  //  Main configuration of the tasks that grunt will run. 
+  //  These are all configurable.
+  //  ====================================================
+  //
   grunt.initConfig({
     
     // make a local variable to reference the package.json object. 
@@ -16,49 +38,111 @@ module.exports = function(grunt) {
       CLEAN TASK
     */
     clean: {
-      build: ['build']
+      build: ['build'],
+      remainingFiles: ['build/css/<%= pkg.name %>.css', 'build/js/<%= pkg.name %>.js']
     },
 
     /**
-      CONCAT THE CSS FILES TOGETHER
+      MINIFY THE CSS
+
+      - http://stackoverflow.com/questions/13713273/how-to-concatenate-and-minify-multiple-css-and-javascript-files-with-grunt-js
     */
-    concat: {
-      dist: {
-        src: ['src/css/bp.css', 'src/css/main.css', 'src/css/helper.css'],
-        dest: 'build/css/style.css'
+    cssmin: {
+      css:{
+        src: 'build/css/<%= pkg.name %>.css',
+        dest: 'build/css/<%= pkg.name %>.min.css'
       }
     },
 
     /**
+      CONCAT THE CSS and JavaScript FILES TOGETHER
+    */
+    concat: {
+      css: {
+        src: ['src/css/*', 'lib/css/*'],
+        dest: 'build/css/<%= pkg.name %>.css'
+      },
+      js: {
+        src: ['src/js/*'],
+        dest: 'build/js/<%= pkg.name %>.js'
+      }
+    }, 
+
+    /**
       COPY CSS AND JS FILES FROM SRC TO BUILD
+
+      NOTE: that this will look for your javascript file whose name is specified in package.json.
     */
     copy: {
-      dist: {
-        files: {
-          "build/index.html": "src/index.html",
-          "build/css/style.css": "src/css/style.css",
-          "build/css/reset.css": "src/css/reset.css",
-          "build/css/normalize.css": "src/css/normalize.css",
-          "build/js/script.js": "src/js/script.js"
+      main: {
+        files: [
+          {src: ['src/index.html'], dest: 'build/index.html'}, // includes the index file in the build
+          {expand: true, flatten: true, src: ['libs/js/**'], dest: 'build/js', filter: 'isFile'}, // put the already minified files into the js folder.
+          {expand: true, flatten: true, src: ['src/media/**'], dest: 'build/media', filter: 'isFile'}, // put the already minified files into the js folder.
+        
+        ]
+      }
+    },
+
+    /**
+      Minify the HTML
+    */
+    htmlmin: {                                     // Task
+      dist: {                                      // Target
+        options: {                                 // Target options
+          removeComments: true,
+          collapseWhitespace: true
+        },
+        files: {                                   // Dictionary of files
+          'build/index.html': 'src/index.html'
         }
       }
     },
 
     /**
       UGLIFY: Minify the javascript files. 
+
+      NOTE: the 'options' property will specify header text that will be inserted into the top of your 
+            uglified file. This is useful during product deployment, so your client can report as to which
+            build is being used. 
     */
     uglify: {
       options: {
-        banner: '/*! <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> */\n'
+        banner: '/*! Project name: \"<%= pkg.name %>\", version # <%= pkg.version %>\n Created on <%= grunt.template.today("dddd, mmmm dS, yyyy, h:MM:ss TT") %> */\n',
+        mangle: true,     // rename all the variables to non sensical data. 
+        compress: true,
+        beautify: false,  // set this to true for debugging. It will make it human readable. 
+        report: 'gzip'    // this will GZip the file decreasing the size SIGNIFICANTLY
       },
       build: {
-        src: 'src/js/<%= pkg.name %>.js',
+        src: 'build/js/*.js',
         dest: 'build/js/<%= pkg.name %>.min.js'
       }
     },
 
+    jshint: {
+      // define the files to lint
+      files: ['gruntfile.js', 'src/js/*.js'],
+      // configure JSHint (documented at http://www.jshint.com/docs/)
+      options: {
+          // more options here if you want to override JSHint defaults
+        globals: {
+          jQuery: true,
+          console: true,
+          module: true
+        }
+      }
+    },
+
+    qunit: {
+      files: ['test/*.html']
+    },
+
     /**
       CHECK FOR SPELLING
+
+      NOTE:   - Notice that you can specify the languages in the options. 
+              - Also note that it will check whichever file you specify here. 
     */
     spell: {
       all: {
@@ -73,18 +157,23 @@ module.exports = function(grunt) {
       WATCH: this will watch to see when you change a file, it will update it and export it to the build folder. 
     */
     watch: {
-      files: ['src/css/*.css', 'js/*.js'],
-      tasks: 'concat min'
+      files: ['src/css/*.css', 'src/js/*.js', 'src/*.html'],
+      tasks: 'pub'
     }
   });
 
-  grunt.registerTask('default', ['clean', 'concat', 'uglify'])
-  {
-     //grunt.log.write('Running Default task...').ok();
-  };
-  grunt.registerTask('pub', ['clean', 'concat', 'uglify', 'copy'])
-  {
-      //grunt.log.write('Running Publish task...').ok();
-  };
+  //
+  //  ==========================
+  //    Register custom tasks. 
+  //  ==========================
+  //
+  // this would be run by typing "grunt" or "grunt default"
+  grunt.registerTask('default', ['clean', 'concat', 'uglify']);
+  
+  // this would be run by typing "grunt pub"
+  grunt.registerTask('pub', ['clean:build', 'concat', 'cssmin', 'uglify', 'copy', 'clean:remainingFiles']);
+  
+  // this would be run by typing "grunt test" on the command line
+  grunt.registerTask('test', ['spell', 'jshint', 'qunit']);
 
 };
