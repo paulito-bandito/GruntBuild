@@ -16,11 +16,14 @@
     "qunit": "~0.5.16",
     "grunt-css": "~0.5.4",
     "grunt-contrib-htmlmin": "~0.1.3",
-    "grunt-contrib-qunit": "~0.3.0"
+    "grunt-contrib-qunit": "~0.3.0",
+    "grunt-contrib-yuidoc": "~0.5.0"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Paul Walter",
-  "license": "BSD-2-Clause"
+  "license": "BSD-2-Clause",
+  "pathDoc": "./doc/",
+  "pathSrc": "./src/"
 }

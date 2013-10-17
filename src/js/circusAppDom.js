@@ -1,4 +1,9 @@
+/**
+	@module circusAppDom
+*/
 circusAppDom = {
+
+	// For more info on documentation: http://stackoverflow.com/questions/13876554/documentation-of-classes-and-modules-in-yuidocs
 
 	mediaPath : "media/", // what folder the image resources exist at.
 	imgBigPostfix :"_big.png", //This is going to be the string that get's appended to the end of the image for large images.
@@ -6,20 +11,26 @@ circusAppDom = {
 
 
 	/**
-		Animal is the super class that contains images that will be swaped
+		Don't use this class directly, instead, be sure to subclass.
+
+		<p>Animal is the super class that contains images that will be swaped (thumbnail and regular image)</p>
 
 		<p>Note, that this object will insert a reference inside it'self into it;s two associated images. </p>
 
-		@param name Is the name of the animal
-		@param sound Is the string representation of what noise the animal makes.
-		@param imageBaseName Is the part of the file name that will be used. For 
+		@class Animal
+		@constructor
+		@param {String} [a_name] Is the name of the animal
+		@param {String} [a_sound] Is the string representation of what noise the animal makes.
+		@param {String} [a_imageBaseName] Is the part of the file name that will be used. For 
 				example, if 'bear' is inputted, then this class will generate a 'bear_sm.png', or a 'bear_lg.png'.
+		@param {String} [a_type] The class type, so the type can be detected during runtime because the Javascript "instanceOf" operator doesn't work very well.
 	*/
-	Animal: function(a_name, a_sound, a_imageBaseName)
+	Animal: function(a_name, a_sound, a_imageBaseName, a_type)
 	{
 		var name = a_name; // The name of the animal
 		var sound = a_sound; //The sound that the animal makes.
 		var imageBaseName = a_imageBaseName;
+		var type = a_type;
 		
 		var imgSmall = circusAppDom.mediaPath + imageBaseName + circusAppDom.imgSmallPostfix;
 
@@ -42,47 +53,90 @@ circusAppDom = {
 		{
 			return imgSmall;
 		};
+
+		/**
+			Returns the type of animal this class is because the Javascript 
+			instanceOf operator won't distinguish which type. 
+
+			@method getType
+			@return {Object} The function constructor of the animal (i.e. circusAppDom.Bear)
+		*/
+		this.getType = function()
+		{
+			return type;
+		};
 	},
 
+	/**
+		The bear class has a bear picture, and can hibernate. 
+
+		@class Bear
+
+		@constructor
+		@param {String} [name] Is the name of the animal
+	*/
 	Bear: function(name)
 	{
-		var thisBear = Object.create(new circusAppDom.Animal(name, "rarrrr", "bear"));
+		var thisBear = Object.create(new circusAppDom.Animal(name, "rarrrr", "bear", circusAppDom.Bear));
+		
+		/**
+			Get the bear to sleep
+
+			@method hibernate
+			@return {String} The name plus the string " sleeps for the winter"
+		*/
 		thisBear.hibernate = function(){
 			return name + " sleeps for the winter";
-		};
-		
-		thisBear.type = function(){
-			return "bear";
 		};
 
 		return thisBear;
 	},
 
+	/**
+		The Monkey class has a monkey picture, and can "eat bananas". 
+		
+		@class Monkey
+
+		@constructor
+		@param {String} [name] Is the name of the animal
+	*/
 	Monkey: function(name)
 	{
-		var thisMonkey = Object.create(new circusAppDom.Animal(name, "ohhh haaa", "monkey"));
+		var thisMonkey = Object.create(new circusAppDom.Animal(name, "ohhh haaa", "monkey", circusAppDom.Monkey));
 		
+		/**
+			Get the monkey to eat a banana
+
+			@method eatSnacks
+			@return {String} The name plus the string " eats some snacks"
+		*/
 		thisMonkey.eatBanana = function(){
 			return name + " eats a banana";
-		};
-		
-		thisMonkey.type = function(){
-			return "monkey";
 		};
 
 		return thisMonkey;
 	},
 
+	/**
+		The Pig class has a pig picture, and can "eat snacks". 
+		
+		@class Pig
+
+		@constructor
+		@param {String} [name] Is the name of the animal
+	*/
 	Pig: function(name)
 	{
-		var thisPig = Object.create(new circusAppDom.Animal(name, "oink", "pig"));
+		var thisPig = Object.create(new circusAppDom.Animal(name, "oink", "pig", circusAppDom.Pig));
 		
+		/**
+			Get the animal to eat some snacks
+
+			@method eatSnacks
+			@return {String} The name plus the string " eats some snacks"
+		*/
 		thisPig.eatSnacks = function(){
 			return name + " eats some snacks";
-		};
-		
-		thisPig.type = function(){
-			return "pig";
 		};
 
 		return thisPig;

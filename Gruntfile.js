@@ -16,6 +16,9 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-css');              // cssmin
   grunt.loadNpmTasks('grunt-contrib-uglify');   // uglify
 
+  // docs
+  grunt.loadNpmTasks('grunt-contrib-yuidoc');
+
   // tests
   grunt.loadNpmTasks('grunt-spell');            // spell
   grunt.loadNpmTasks('grunt-contrib-jshint');
@@ -109,10 +112,10 @@ module.exports = function(grunt) {
     uglify: {
       options: {
         banner: '/*! Project name: \"<%= pkg.name %>\", version # <%= pkg.version %>\n Created on <%= grunt.template.today("dddd, mmmm dS, yyyy, h:MM:ss TT") %> */\n',
-        mangle: true,     // rename all the variables to non sensical data. 
+        mangle: false,     // rename all the variables to non sensical data. 
         compress: true,
-        beautify: false,  // set this to true for debugging. It will make it human readable. 
-        report: 'gzip'    // this will GZip the file decreasing the size SIGNIFICANTLY
+        beautify: true,  // set this to true for debugging. It will make it human readable. 
+        report: 'none'    // this will GZip the file decreasing the size SIGNIFICANTLY
       },
       build: {
         src: 'build/js/*.js',
@@ -168,7 +171,24 @@ module.exports = function(grunt) {
     watch: {
       files: ['Gruntfile.js','src/css/*.css', 'src/js/*.js', 'src/*.html'],
       tasks: 'default'
+    },
+
+    /**
+      Create Documentation!
+    */
+    yuidoc: {
+    compile: {
+      name: '<%= pkg.name %>',
+      description: '<%= pkg.description %>',
+      version: '<%= pkg.version %>',
+      url: '<%= pkg.homepage %>',
+      options: {
+        paths: '<%= pkg.pathSrc %>js/',
+        //themedir: 'path/to/custom/theme/',
+        outdir: '<%= pkg.pathDoc %>'
+      }
     }
+  }
   });
 
   //
@@ -182,5 +202,10 @@ module.exports = function(grunt) {
   
   // this would be run by typing "grunt test" on the command line
   grunt.registerTask('test', ['spell', 'jshint', 'qunit']);
+
+  // this will generate the Documentation
+  grunt.registerTask('doc', ['yuidoc']);
+
+  
 
 };

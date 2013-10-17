@@ -2,7 +2,7 @@
 SIMPLE GRUNT BUILD PROJECT
 ===========================
 
-The aim of this project is to get a current useful build environment to use in Node JS to automate alot of tedious things we don't want to manually do. Alot of examples exist for versions before 0.9, and this one bridges those gaps. The version of Grunt we are using are:
+The aim of this project is to get a current useful build environment to use in Node JS to automate alot of tedious things we don't want to manually do. Alot of examples exist for versions before 0.9, and this one bridges those gaps. The versions of Grunt we are using are:
 
 	* Command line: 	grunt-cli v0.1.9
 	* Grunt Module: 	grunt v0.4.1

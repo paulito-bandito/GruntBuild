@@ -1,7 +1,13 @@
+/**
+	@module circusAppDomGui
+*/
 circusAppDomGui = {
 
 	animals: [],
 
+	/**
+		@method addAnimal
+	*/
 	addAnimal : function()
 	{
 		var animal = "";
@@ -55,7 +61,7 @@ circusAppDomGui = {
 			theDiv.appendChild(textNode);
 			aList.appendChild(theDiv);
 
-			circusAppDomGui.log( circusAppDomGui.tNode("Animal Added: It is a " + newAnimal.getName()));
+			circusAppDomGui.log( "Animal Added: It is a " + newAnimal.getName());
 		}
 	},
 
@@ -64,7 +70,7 @@ circusAppDomGui = {
 	*/
 	imageToggleSrc: function(e)
 	{
-		console.log(circusAppDomGui.tNode("rollover" + e));
+		console.log("rollover" + e);
 
 		// note that this function utilizes the reference that the Animal base 
 		// class will insert into the image to reference itself. 
@@ -85,7 +91,7 @@ circusAppDomGui = {
 			img.src = newImgSrc;
 
 		}else{
-			circusAppDomGui.log(circusAppDomGui.tNode("No 'animal' property found on the source image. Are you sure you are instantiating an Animal?"));
+			circusAppDomGui.log("No 'animal' property found on the source image. Are you sure you are instantiating an Animal?");
 		}
 		
 
@@ -102,7 +108,7 @@ circusAppDomGui = {
 		{
 			msgToLog += circusAppDomGui.animals[i].getName() + " goes " + circusAppDomGui.animals[i].makesSound() + "! ";
 		}
-		circusAppDomGui.log(circusAppDomGui.tNode(msgToLog));
+		circusAppDomGui.log(msgToLog);
 	},
 
 	/**
@@ -110,18 +116,18 @@ circusAppDomGui = {
 	*/
 	groupTricks : function()
 	{
-		var msgToLog = (new Date()).toString() + ", Group Tricks!! ";
+		var msgToLog = "Group Tricks! ";
 		for (var i=0; i<circusAppDomGui.animals.length; i++)
 		{
-			switch(circusAppDomGui.animals[i].type())
+			switch(circusAppDomGui.animals[i].getType())
 			{
-				case "bear":
+				case circusAppDom.Bear:
 					msgToLog += circusAppDomGui.animals[i].hibernate();
 					break;
-				case "pig":
+				case circusAppDom.Pig:
 					msgToLog += circusAppDomGui.animals[i].eatSnacks();
 					break;
-				case "monkey":
+				case circusAppDom.Monkey:
 					msgToLog += circusAppDomGui.animals[i].eatBanana();
 					break;
 				default:
@@ -131,20 +137,16 @@ circusAppDomGui = {
 
 		}
 
-		circusAppDomGui.log(circusAppDomGui.tNode(msgToLog));
+		circusAppDomGui.log(msgToLog);
 	},
 
-	tNode : function (msg)
-	{
-		return document.createTextNode(msg);
-	},
-
-	log : function(node)
+	log : function(msg)
 	{
 		var ul = document.getElementById("log");
 
 		var theLi = document.createElement("li");
-		theLi.appendChild(node);
+		var textNode = document.createTextNode(msg);
+		theLi.appendChild(textNode);
 		ul.appendChild(theLi);
 	},
 };
