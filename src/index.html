@@ -5,6 +5,9 @@
     
     <!-- This is where your Data Models and GUI (OOP) will go. -->
     <script type="text/javascript" src="js/circusapp.min.js"></script>
+    <title>Circus Application</title>
+
+    <link rel="shortcut icon" type="image/x-icon" href="media/favicon.gif">
 
   </head>
     
@@ -20,18 +23,18 @@
       <ul  id="nav">
         
         <!-- Add button, this will add a new animal to the group -->
-        <li><a href="#" onclick="circusAppDomGui.addAnimal()">Add</a></li>
+        <li><a href="#" onclick="circusapp.app.addAnimal()">Add</a></li>
 
         <!-- Sing button, this will iterate through the list of 
          animals and get them to do their own special song.-->
-        <li><a href="#" onclick="circusAppDomGui.groupSing()">Group Sing</a></li>
+        <li><a href="#" onclick="circusapp.app.groupSing()">Group Sing</a></li>
 
         <!-- Trick button, this will iterate through the list of 
          animals and get them to do their own special trick.
 
         NOTE: use a switch statement for executing this custom method.
         -->
-        <li><a href="#" onclick="circusAppDomGui.groupTricks()">Group Tricks</a></li>
+        <li><a href="#" onclick="circusapp.app.groupTricks()">Group Tricks</a></li>
       </ul>
 
     </div>

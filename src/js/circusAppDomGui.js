@@ -1,11 +1,23 @@
-/**
-	@module circusAppDomGui
-*/
-circusAppDomGui = {
+var circusapp = circusapp || {}; // check to see if the module exists already, if not create one.
 
-	animals: [],
+/**
+	This is the business logic for keeping track of what animals are created. 
+
+	@module circusapp.app
+	@class GUI
+*/
+circusapp.app = {
 
 	/**
+		Private property that contains the current list of animals.
+
+		@property _animals
+	*/
+	_animals: [],
+
+	/**
+		This method will prompt the user for which animal they wish to create, and then add it to the collection. 
+		
 		@method addAnimal
 	*/
 	addAnimal : function()
@@ -23,13 +35,13 @@ circusAppDomGui = {
 		switch(animal)
 		{
 			case "bear":
-				newAnimal = new circusAppDom.Bear(name);
+				newAnimal = new circusapp.domain.Bear(name);
 				break;
 			case "pig":
-				newAnimal = new circusAppDom.Pig(name);
+				newAnimal = new circusapp.domain.Pig(name);
 				break;
 			case "monkey":
-				newAnimal = new circusAppDom.Monkey(name);
+				newAnimal = new circusapp.domain.Monkey(name);
 				break;
 		}
 		
@@ -37,7 +49,7 @@ circusAppDomGui = {
 		if(newAnimal)
 		{
 			// add it to the array
-			circusAppDomGui.animals.push( newAnimal );
+			circusapp.app._animals.push( newAnimal );
 
 			// get a hold of the target. 
 			var aList = document.getElementById("animalList");
@@ -50,8 +62,8 @@ circusAppDomGui = {
 			imgRef.animal = newAnimal;
 
 			// add handlers that will swap the big and small images. 
-			imgRef.addEventListener("mouseover", circusAppDomGui.imageToggleSrc, false);
-			imgRef.addEventListener("mouseout", circusAppDomGui.imageToggleSrc, false);
+			imgRef.addEventListener("mouseover", circusapp.app.imageToggleSrc, false);
+			imgRef.addEventListener("mouseout", circusapp.app.imageToggleSrc, false);
 
 
 			// create a div to put inside
@@ -61,16 +73,18 @@ circusAppDomGui = {
 			theDiv.appendChild(textNode);
 			aList.appendChild(theDiv);
 
-			circusAppDomGui.log( "Animal Added: It is a " + newAnimal.getName());
+			circusapp.app._log( "* ANIMAL ADDED: Whom has the name of '" + newAnimal.getName() + "'");
 		}
 	},
 
 	/**
-		This will get called with the image is rolled over. 
+		This will get called when the image is rolled over, and set the other image (if it is a thumbnail, it will swap it for a big pic.)  
+
+		@method imageToggleSrc
 	*/
 	imageToggleSrc: function(e)
 	{
-		console.log("rollover" + e);
+		
 
 		// note that this function utilizes the reference that the Animal base 
 		// class will insert into the image to reference itself. 
@@ -84,63 +98,83 @@ circusAppDomGui = {
 			if(img.src.indexOf(referencedAnimal.getImgSmall()) != -1)
 			{
 				newImgSrc = referencedAnimal.getImgBig();
+				circusapp.app._log("* MOUSEOVER, " + e.currentTarget);
 			}else{
 				newImgSrc = referencedAnimal.getImgSmall();
+				circusapp.app._log("* MOUSEOUT, " + e.currentTarget);
 			}
 			
 			img.src = newImgSrc;
 
 		}else{
-			circusAppDomGui.log("No 'animal' property found on the source image. Are you sure you are instantiating an Animal?");
+			circusapp.app._log("* No 'animal' property found on the source image. Are you sure you are instantiating an Animal?");
 		}
 		
 
 	},
 
 	/**
-		This is used to return the sound the song that the animals make. 
+		This is used to return the sound the song that the _animals make. It will 
+
+		@method groupSing
 	*/
 	groupSing : function()
 	{
-		var msgToLog = "Group Song! ";
-
-		for (var i=0; i<circusAppDomGui.animals.length; i++)
+		var msgToLog = "* GROUP SONG: ";
+		if(circusapp.app._animals.length > 0)
 		{
-			msgToLog += circusAppDomGui.animals[i].getName() + " goes " + circusAppDomGui.animals[i].makesSound() + "! ";
+			for (var i=0; i<circusapp.app._animals.length; i++)
+			{
+				msgToLog += "'" + circusapp.app._animals[i].getName() + "' goes " + circusapp.app._animals[i].makesSound() + "! ";
+			}
+
+			circusapp.app._log(msgToLog);
 		}
-		circusAppDomGui.log(msgToLog);
+		
+		
 	},
 
 	/**
 		This function is to make sure the students know how to use a switch statement. 
+
+		@method groupTricks
 	*/
 	groupTricks : function()
 	{
-		var msgToLog = "Group Tricks! ";
-		for (var i=0; i<circusAppDomGui.animals.length; i++)
+		var msgToLog = "* GROUP TRICKS: ";
+		if(circusapp.app._animals.length > 0)
 		{
-			switch(circusAppDomGui.animals[i].getType())
+			for (var i=0; i<circusapp.app._animals.length; i++)
 			{
-				case circusAppDom.Bear:
-					msgToLog += circusAppDomGui.animals[i].hibernate();
-					break;
-				case circusAppDom.Pig:
-					msgToLog += circusAppDomGui.animals[i].eatSnacks();
-					break;
-				case circusAppDom.Monkey:
-					msgToLog += circusAppDomGui.animals[i].eatBanana();
-					break;
-				default:
-					break;
+				switch(circusapp.app._animals[i].getType())
+				{
+					case circusapp.domain.Bear:
+						msgToLog += circusapp.app._animals[i].hibernate();
+						break;
+					case circusapp.domain.Pig:
+						msgToLog += circusapp.app._animals[i].eatSnacks();
+						break;
+					case circusapp.domain.Monkey:
+						msgToLog += circusapp.app._animals[i].eatBanana();
+						break;
+					default:
+						break;
+				}
+				msgToLog += ", ";
+
 			}
-			msgToLog += ", ";
 
+			circusapp.app._log(msgToLog);
 		}
-
-		circusAppDomGui.log(msgToLog);
+		
 	},
 
-	log : function(msg)
+	/**
+		Private utility method for writing to an HTML element with an id of "log". (I know, it's crappy that it's hard-coded :-P)
+
+		@method log
+	*/
+	_log : function(msg)
 	{
 		var ul = document.getElementById("log");
 

@@ -112,9 +112,9 @@ module.exports = function(grunt) {
     uglify: {
       options: {
         banner: '/*! Project name: \"<%= pkg.name %>\", version # <%= pkg.version %>\n Created on <%= grunt.template.today("dddd, mmmm dS, yyyy, h:MM:ss TT") %> */\n',
-        mangle: false,     // rename all the variables to non sensical data. 
+        mangle: true,     // rename all the variables to non sensical data. 
         compress: true,
-        beautify: true,  // set this to true for debugging. It will make it human readable. 
+        beautify: false,  // set this to true for debugging. It will make it human readable. 
         report: 'none'    // this will GZip the file decreasing the size SIGNIFICANTLY
       },
       build: {

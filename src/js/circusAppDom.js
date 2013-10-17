@@ -1,7 +1,9 @@
+var circusapp = circusapp || {}; // check to see if the module exists already, if not create one.
+
 /**
-	@module circusAppDom
+	@module circusapp.domain
 */
-circusAppDom = {
+circusapp.domain = {
 
 	// For more info on documentation: http://stackoverflow.com/questions/13876554/documentation-of-classes-and-modules-in-yuidocs
 
@@ -32,9 +34,9 @@ circusAppDom = {
 		var imageBaseName = a_imageBaseName;
 		var type = a_type;
 		
-		var imgSmall = circusAppDom.mediaPath + imageBaseName + circusAppDom.imgSmallPostfix;
+		var imgSmall = circusapp.domain.mediaPath + imageBaseName + circusapp.domain.imgSmallPostfix;
 
-		var imgBig = circusAppDom.mediaPath + imageBaseName + circusAppDom.imgBigPostfix;
+		var imgBig = circusapp.domain.mediaPath + imageBaseName + circusapp.domain.imgBigPostfix;
 
 		this.makesSound = function(){
 			return sound;
@@ -59,7 +61,7 @@ circusAppDom = {
 			instanceOf operator won't distinguish which type. 
 
 			@method getType
-			@return {Object} The function constructor of the animal (i.e. circusAppDom.Bear)
+			@return {Object} The function constructor of the animal (i.e. circusapp.domain.Bear)
 		*/
 		this.getType = function()
 		{
@@ -77,7 +79,7 @@ circusAppDom = {
 	*/
 	Bear: function(name)
 	{
-		var thisBear = Object.create(new circusAppDom.Animal(name, "rarrrr", "bear", circusAppDom.Bear));
+		var thisBear = Object.create(new circusapp.domain.Animal(name, "rarrrr", "bear", circusapp.domain.Bear));
 		
 		/**
 			Get the bear to sleep
@@ -86,7 +88,7 @@ circusAppDom = {
 			@return {String} The name plus the string " sleeps for the winter"
 		*/
 		thisBear.hibernate = function(){
-			return name + " sleeps for the winter";
+			return "'" + name + "' sleeps for the winter";
 		};
 
 		return thisBear;
@@ -102,7 +104,7 @@ circusAppDom = {
 	*/
 	Monkey: function(name)
 	{
-		var thisMonkey = Object.create(new circusAppDom.Animal(name, "ohhh haaa", "monkey", circusAppDom.Monkey));
+		var thisMonkey = Object.create(new circusapp.domain.Animal(name, "ohhh haaa", "monkey", circusapp.domain.Monkey));
 		
 		/**
 			Get the monkey to eat a banana
@@ -111,7 +113,7 @@ circusAppDom = {
 			@return {String} The name plus the string " eats some snacks"
 		*/
 		thisMonkey.eatBanana = function(){
-			return name + " eats a banana";
+			return "'" + name + "' eats a banana";
 		};
 
 		return thisMonkey;
@@ -127,7 +129,7 @@ circusAppDom = {
 	*/
 	Pig: function(name)
 	{
-		var thisPig = Object.create(new circusAppDom.Animal(name, "oink", "pig", circusAppDom.Pig));
+		var thisPig = Object.create(new circusapp.domain.Animal(name, "oink", "pig", circusapp.domain.Pig));
 		
 		/**
 			Get the animal to eat some snacks
@@ -136,7 +138,7 @@ circusAppDom = {
 			@return {String} The name plus the string " eats some snacks"
 		*/
 		thisPig.eatSnacks = function(){
-			return name + " eats some snacks";
+			return "'" + name + "' eats some snacks";
 		};
 
 		return thisPig;
