@@ -55,7 +55,7 @@ module.exports = function(grunt) {
     },
 
     /**
-      CONCAT THE CSS and JavaScript FILES TOGETHER
+      CONCAT CSS and JavaScript FILES TOGETHER (javascript to javascript and vice-versa)
     */
     concat: {
       css: {
@@ -120,6 +120,9 @@ module.exports = function(grunt) {
       }
     },
 
+    /**
+      VERIFY JAVASCRIPT (is free of stupid syntax errors)
+    */
     jshint: {
       // define the files to lint
       files: ['gruntfile.js', 'src/js/*.js'],
@@ -134,6 +137,12 @@ module.exports = function(grunt) {
       }
     },
 
+    /**
+      UNIT TESTS
+
+      Run all the HTML tests. This will use Phantom.js which is a "headless" 
+      (meaning non-graphical implementation) web browser. 
+    */
     qunit: {
       files: ['test/*.html']
     },
@@ -157,8 +166,8 @@ module.exports = function(grunt) {
       WATCH: this will watch to see when you change a file, it will update it and export it to the build folder. 
     */
     watch: {
-      files: ['src/css/*.css', 'src/js/*.js', 'src/*.html'],
-      tasks: 'pub'
+      files: ['Gruntfile.js','src/css/*.css', 'src/js/*.js', 'src/*.html'],
+      tasks: 'default'
     }
   });
 
@@ -167,11 +176,9 @@ module.exports = function(grunt) {
   //    Register custom tasks. 
   //  ==========================
   //
-  // this would be run by typing "grunt" or "grunt default"
-  grunt.registerTask('default', ['clean', 'concat', 'uglify']);
   
   // this would be run by typing "grunt pub"
-  grunt.registerTask('pub', ['clean:build', 'concat', 'cssmin', 'uglify', 'copy', 'clean:remainingFiles']);
+  grunt.registerTask('default', ['clean:build', 'copy', 'concat', 'cssmin', 'uglify', 'htmlmin', 'clean:remainingFiles']);
   
   // this would be run by typing "grunt test" on the command line
   grunt.registerTask('test', ['spell', 'jshint', 'qunit']);

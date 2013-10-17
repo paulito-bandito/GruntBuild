@@ -55,7 +55,7 @@ circusAppDomGui = {
 			theDiv.appendChild(textNode);
 			aList.appendChild(theDiv);
 
-			circusAppDomGui.log( "Animal Added: It is a " + newAnimal.getName());
+			circusAppDomGui.log( circusAppDomGui.tNode("Animal Added: It is a " + newAnimal.getName()));
 		}
 	},
 
@@ -64,7 +64,7 @@ circusAppDomGui = {
 	*/
 	imageToggleSrc: function(e)
 	{
-		console.log("rollover" + e);
+		console.log(circusAppDomGui.tNode("rollover" + e));
 
 		// note that this function utilizes the reference that the Animal base 
 		// class will insert into the image to reference itself. 
@@ -85,7 +85,7 @@ circusAppDomGui = {
 			img.src = newImgSrc;
 
 		}else{
-			circusAppDomGui.log("No 'animal' property found on the source image. Are you sure you are instantiating an Animal?");
+			circusAppDomGui.log(circusAppDomGui.tNode("No 'animal' property found on the source image. Are you sure you are instantiating an Animal?"));
 		}
 		
 
@@ -102,7 +102,7 @@ circusAppDomGui = {
 		{
 			msgToLog += circusAppDomGui.animals[i].getName() + " goes " + circusAppDomGui.animals[i].makesSound() + "! ";
 		}
-		circusAppDomGui.log(msgToLog);
+		circusAppDomGui.log(circusAppDomGui.tNode(msgToLog));
 	},
 
 	/**
@@ -110,7 +110,7 @@ circusAppDomGui = {
 	*/
 	groupTricks : function()
 	{
-		var msgToLog = "Group Tricks! ";
+		var msgToLog = (new Date()).toString() + ", Group Tricks!! ";
 		for (var i=0; i<circusAppDomGui.animals.length; i++)
 		{
 			switch(circusAppDomGui.animals[i].type())
@@ -131,16 +131,20 @@ circusAppDomGui = {
 
 		}
 
-		circusAppDomGui.log(msgToLog);
+		circusAppDomGui.log(circusAppDomGui.tNode(msgToLog));
 	},
 
-	log : function(msg)
+	tNode : function (msg)
+	{
+		return document.createTextNode(msg);
+	},
+
+	log : function(node)
 	{
 		var ul = document.getElementById("log");
 
 		var theLi = document.createElement("li");
-		var textNode = document.createTextNode(msg);
-		theLi.appendChild(textNode);
+		theLi.appendChild(node);
 		ul.appendChild(theLi);
 	},
 };
