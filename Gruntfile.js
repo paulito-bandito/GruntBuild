@@ -11,7 +11,9 @@ module.exports = function(grunt) {
   //  type 'npm install')
   //  ====================================================
   //
-  grunt.loadNpmTasks('grunt-contrib');          // 
+  grunt.loadNpmTasks('grunt-contrib-clean'); 
+  grunt.loadNpmTasks('grunt-contrib-copy'); 
+  grunt.loadNpmTasks('grunt-contrib-concat'); 
   grunt.loadNpmTasks('grunt-contrib-htmlmin');  // htmlmin
   grunt.loadNpmTasks('grunt-css');              // cssmin
   grunt.loadNpmTasks('grunt-contrib-uglify');   // uglify
