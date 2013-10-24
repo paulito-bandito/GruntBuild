@@ -27,5 +27,6 @@
   "author": "Paul Walter",
   "license": "BSD-2-Clause",
   "pathDoc": "./doc/",
-  "pathSrc": "./src/"
+  "pathSrc": "./src/",
+  "pathBuild": "./build/"
 }

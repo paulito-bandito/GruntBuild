@@ -44,7 +44,7 @@ module.exports = function(grunt) {
     */
     clean: {
       build: ['build'],
-      remainingFiles: ['build/css/<%= pkg.name %>.css', 'build/js/<%= pkg.name %>.js']
+      remainingFiles: ['<%= pkg.pathBuild %>css/<%= pkg.name %>.css', '<%= pkg.pathBuild %>js/<%= pkg.name %>.js']
     },
 
     /**
@@ -54,8 +54,8 @@ module.exports = function(grunt) {
     */
     cssmin: {
       css:{
-        src: 'build/css/<%= pkg.name %>.css',
-        dest: 'build/css/<%= pkg.name %>.min.css'
+        src: '<%= pkg.pathBuild %>css/<%= pkg.name %>.css',
+        dest: '<%= pkg.pathBuild %>css/<%= pkg.name %>.min.css'
       }
     },
 
@@ -65,11 +65,11 @@ module.exports = function(grunt) {
     concat: {
       css: {
         src: ['src/css/*', 'lib/css/*'],
-        dest: 'build/css/<%= pkg.name %>.css'
+        dest: '<%= pkg.pathBuild %>css/<%= pkg.name %>.css'
       },
       js: {
         src: ['src/js/*'],
-        dest: 'build/js/<%= pkg.name %>.js'
+        dest: '<%= pkg.pathBuild %>js/<%= pkg.name %>.js'
       }
     }, 
 
@@ -81,9 +81,9 @@ module.exports = function(grunt) {
     copy: {
       main: {
         files: [
-          {src: ['src/index.html'], dest: 'build/index.html'}, // includes the index file in the build
-          {expand: true, flatten: true, src: ['libs/js/**'], dest: 'build/js', filter: 'isFile'}, // put the already minified files into the js folder.
-          {expand: true, flatten: true, src: ['src/media/**'], dest: 'build/media', filter: 'isFile'}, // put the already minified files into the js folder.
+          {src: ['src/index.html'], dest: '<%= pkg.pathBuild %>index.html'}, // includes the index file in the build
+          {expand: true, flatten: true, src: ['libs/js/**'], dest: '<%= pkg.pathBuild %>js', filter: 'isFile'}, // put the already minified files into the js folder.
+          {expand: true, flatten: true, src: ['src/media/**'], dest: '<%= pkg.pathBuild %>media', filter: 'isFile'}, // put the already minified files into the js folder.
         
         ]
       }
@@ -99,7 +99,7 @@ module.exports = function(grunt) {
           collapseWhitespace: true
         },
         files: {                                   // Dictionary of files
-          'build/index.html': 'src/index.html'
+          '<%= pkg.pathBuild %>index.html': 'src/index.html'
         }
       }
     },
@@ -120,8 +120,8 @@ module.exports = function(grunt) {
         report: 'none'    // this will GZip the file decreasing the size SIGNIFICANTLY
       },
       build: {
-        src: 'build/js/*.js',
-        dest: 'build/js/<%= pkg.name %>.min.js'
+        src: '<%= pkg.pathBuild %>js/*.js',
+        dest: '<%= pkg.pathBuild %>js/<%= pkg.name %>.min.js'
       }
     },
 
