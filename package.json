@@ -1,8 +1,16 @@
 {
   "name": "circusapp",
+  "author": "Paul Walter",
   "version": "0.0.1",
   "description": "This is a very simple javascript app that illustrates how to leverage object oriented ('class' inheritance) features of Javascript.",
+  "license": "BSD-2-Clause",
   "main": "index.js",
+  "homepage" : "localhost",
+
+  "pathDoc": "./doc/",
+  "pathSrc": "./src/",
+  "pathBuild": "./build/",
+
   "dependencies": {
     "grunt": "~0.4.1"
   },
@@ -23,10 +31,5 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "Paul Walter",
-  "license": "BSD-2-Clause",
-  "pathDoc": "./doc/",
-  "pathSrc": "./src/",
-  "pathBuild": "./build/"
+  }
 }
