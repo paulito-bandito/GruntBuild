@@ -64,11 +64,11 @@ module.exports = function(grunt) {
     */
     concat: {
       css: {
-        src: ['src/css/*', 'lib/css/*'],
+        src: ['<%= pkg.pathSrc %>css/*', 'lib/css/*'],
         dest: '<%= pkg.pathBuild %>css/<%= pkg.name %>.css'
       },
       js: {
-        src: ['src/js/*'],
+        src: ['<%= pkg.pathSrc %>js/*'],
         dest: '<%= pkg.pathBuild %>js/<%= pkg.name %>.js'
       }
     }, 
@@ -81,9 +81,9 @@ module.exports = function(grunt) {
     copy: {
       main: {
         files: [
-          {src: ['src/index.html'], dest: '<%= pkg.pathBuild %>index.html'}, // includes the index file in the build
+          {src: ['<%= pkg.pathSrc %>index.html'], dest: '<%= pkg.pathBuild %>index.html'}, // includes the index file in the build
           {expand: true, flatten: true, src: ['libs/js/**'], dest: '<%= pkg.pathBuild %>js', filter: 'isFile'}, // put the already minified files into the js folder.
-          {expand: true, flatten: true, src: ['src/media/**'], dest: '<%= pkg.pathBuild %>media', filter: 'isFile'}, // put the already minified files into the js folder.
+          {expand: true, flatten: true, src: ['<%= pkg.pathSrc %>media/**'], dest: '<%= pkg.pathBuild %>media', filter: 'isFile'}, // put the already minified files into the js folder.
         
         ]
       }
@@ -99,7 +99,7 @@ module.exports = function(grunt) {
           collapseWhitespace: true
         },
         files: {                                   // Dictionary of files
-          '<%= pkg.pathBuild %>index.html': 'src/index.html'
+          '<%= pkg.pathBuild %>index.html': '<%= pkg.pathSrc %>index.html'
         }
       }
     },
@@ -130,7 +130,7 @@ module.exports = function(grunt) {
     */
     jshint: {
       // define the files to lint
-      files: ['gruntfile.js', 'src/js/*.js'],
+      files: ['gruntfile.js', '<%= pkg.pathSrc %>js/*.js'],
       // configure JSHint (documented at http://www.jshint.com/docs/)
       options: {
           // more options here if you want to override JSHint defaults
@@ -171,7 +171,7 @@ module.exports = function(grunt) {
       WATCH: this will watch to see when you change a file, it will update it and export it to the build folder. 
     */
     watch: {
-      files: ['Gruntfile.js','src/css/*.css', 'src/js/*.js', 'src/*.html'],
+      files: ['Gruntfile.js','<%= pkg.pathSrc %>css/*.css', '<%= pkg.pathSrc %>js/*.js', '<%= pkg.pathSrc %>*.html'],
       tasks: 'default'
     },
 
