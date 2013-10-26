@@ -15,9 +15,10 @@ The example source code contained in this project is a simple project that stres
 
 Steps to set up the build:
 1.) Install node.js from the website, install the binary installer. 
-2.) open up a command line and navigate to the project base (that this readme.txt file exists in)
-3.) type in the command "npm install" to install all the dependencies specified in the "./package.json" file. 
-4.) Navigate to the build folder that is generated, and open the index file in the browser. 
+2.) Open up a command line and navigate to the project base (that this readme.txt file exists in)
+3.) Type in the command "npm install" to install all the dependencies specified in the "./package.json" file. 
+4.) Type in "grunt default" so that the default task will be triggered, and the project solution will be built. 
+5.) Navigate to the build folder that is generated, and open the index file in the browser.
 
 
 Other commands you can use:
