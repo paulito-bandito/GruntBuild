@@ -21,6 +21,13 @@ module.exports = function(grunt) {
   // docs
   grunt.loadNpmTasks('grunt-contrib-yuidoc');
 
+  // server
+  grunt.loadNpmTasks('grunt-contrib-connect');
+
+
+  // watch
+  grunt.loadNpmTasks('grunt-contrib-watch');
+
   // tests
   grunt.loadNpmTasks('grunt-spell');            // spell
   grunt.loadNpmTasks('grunt-contrib-jshint');
@@ -179,18 +186,32 @@ module.exports = function(grunt) {
       Create Documentation!
     */
     yuidoc: {
-    compile: {
-      name: '<%= pkg.name %>',
-      description: '<%= pkg.description %>',
-      version: '<%= pkg.version %>',
-      url: '<%= pkg.homepage %>',
-      options: {
-        paths: '<%= pkg.pathSrc %>js/',
-        //themedir: 'path/to/custom/theme/',
-        outdir: '<%= pkg.pathDoc %>'
+      compile: {
+        name: '<%= pkg.name %>',
+        description: '<%= pkg.description %>',
+        version: '<%= pkg.version %>',
+        url: '<%= pkg.homepage %>',
+        options: {
+          paths: '<%= pkg.pathSrc %>js/',
+          //themedir: 'path/to/custom/theme/',
+          outdir: '<%= pkg.pathDoc %>'
+        }
+      }
+    },
+
+    /**
+      Server options: notice that the "base" argument is pointing to the "build" folder. 
+    */
+    connect: {
+      server: {
+          options: {
+          port: 9001,
+          base: 'build',
+          keepalive: true
+        }
       }
     }
-  }
+
   });
 
   //
@@ -207,6 +228,9 @@ module.exports = function(grunt) {
 
   // this will generate the Documentation
   grunt.registerTask('doc', ['yuidoc']);
+
+  // this will generate the Documentation
+  grunt.registerTask('server', ['connect']);
 
   
 
