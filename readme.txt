@@ -57,6 +57,10 @@ The example source code contained in this project is a simple project that stres
 4.) "grunt doc" This will generate YUI docs into a dynamically created folder in the project base called "doc". 
 5.) "grunt watch", this will watch all the files, and as soon as you make a change and press save, it will pipe the whole project through the "grunt" task.
 
+2.) Open up a command line and navigate to the project base (that this readme.txt file exists in)
+3.) Type in the command "npm install" to install all the dependencies specified in the "./package.json" file. 
+4.) Type in "grunt default" so that the default task will be triggered, and the project solution will be built. 
+5.) Navigate to the build folder that is generated, and open the index file in the browser.
 
 
 -------------------------------------------
