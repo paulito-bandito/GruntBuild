@@ -52,21 +52,16 @@ The example source code contained in this project is a simple project that stres
 		3.) AVAILABLE COMMANDS
 -------------------------------------------
 1.) "grunt", this will run the default build task (minify, uglify, package, deploy to the "build" folder.)
-2.) "grunt server", this will run your 
+2.) "grunt server", this will run your application on a local server.
 3.) "grunt test" This will check your spelling in your JavaScript and html files, run some unit tests (these are very trivial at the moment), 
 4.) "grunt doc" This will generate YUI docs into a dynamically created folder in the project base called "doc". 
 5.) "grunt watch", this will watch all the files, and as soon as you make a change and press save, it will pipe the whole project through the "grunt" task.
 
-2.) Open up a command line and navigate to the project base (that this readme.txt file exists in)
-3.) Type in the command "npm install" to install all the dependencies specified in the "./package.json" file. 
-4.) Type in "grunt default" so that the default task will be triggered, and the project solution will be built. 
-5.) Navigate to the build folder that is generated, and open the index file in the browser.
-
-
 -------------------------------------------
 		4.) DEBUG TIPS
 -------------------------------------------
-By default, this build script minifies everything. If you need to debug:
+By default, this build script minifies and uglifies (renames vars to something short and obscure) everything. This is problematic when you are debugging and you get an error message specifying the line number. When you need to debug use the following strategy to make the outputted javascript legible:
+
 1.) Open the ./Gruntfile.js
 2.) You will see the following code snippet:
 
